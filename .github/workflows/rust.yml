@@ -27,3 +27,25 @@ jobs:
           name: coverage-report
           path: coverage
           retention-days: 7
+
+  deploy-coverage:
+    needs: coverage
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: coverage
+      - uses: actions/deploy-pages@v4
+        id: deployment
