@@ -28,7 +28,7 @@ jobs:
           path: coverage
           retention-days: 7
 
-  deploy-coverage:
+    deploy-coverage:
     needs: coverage
     runs-on: ubuntu-latest
     permissions:
@@ -42,10 +42,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: coverage-report
-          path: coverage
+          path: artifact
+      - run: tar -xf artifact/coverage-report.tar -C .
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: coverage
+          path: .
       - uses: actions/deploy-pages@v4
         id: deployment
