@@ -28,7 +28,7 @@ jobs:
           path: coverage
           retention-days: 7
 
-    deploy-coverage:
+  deploy-coverage:
     needs: coverage
     runs-on: ubuntu-latest
     permissions:
